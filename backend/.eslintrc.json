@@ -1,0 +1,24 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "no-console": "error",
+    "import/prefer-default-export": "off",
+    "class-methods-use-this": "off"
+  },
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "ignorePatterns": ["dist", "node_modules"]
+}

@@ -1,0 +1,24 @@
+version: "3.9"
+
+# Data layer is hosted Supabase (Postgres+Auth+Storage) — no local db/cache
+# containers needed. Point SUPABASE_* at either your cloud project or a
+# `supabase start` local stack (http://127.0.0.1:54321 by default).
+services:
+  backend:
+    build:
+      context: .
+      target: development
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    environment:
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      NODE_ENV: development
+      PORT: 3000
+      WS_PORT: 3001
+      LOG_LEVEL: debug
+    volumes:
+      - ./src:/app/src
+    command: npm run dev

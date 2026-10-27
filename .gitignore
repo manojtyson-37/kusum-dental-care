@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# Vite cache
+.vite/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.local
+
+# Git worktrees (nested checkouts, not part of this tree)
+.claude/worktrees/
+
+# Playwright MCP cache
+.playwright-mcp/
+
+# Backend build output / local env
+backend/dist/
+backend/.env
+backend/.env.local
+.vercel
+.env*
+backend/backups/
+Dental website.mov

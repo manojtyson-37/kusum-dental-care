@@ -1,0 +1,126 @@
+{
+  "runId": "2026-09-02T04-31-32-767Z",
+  "apiUrl": "https://kusum-s-dental-care.vercel.app/api/v1",
+  "startedAt": "2026-09-02T04:31:32.768Z",
+  "finishedAt": "2026-09-02T04:31:52.591Z",
+  "durationMs": 19823,
+  "overall": "PASS",
+  "passCount": 19,
+  "failCount": 0,
+  "steps": [
+    {
+      "name": "setup: create QA patient account",
+      "status": "PASS",
+      "detail": "8d90f6eb-3d7b-4d5b-b1bb-8f0d15c0aa4b",
+      "ms": 741
+    },
+    {
+      "name": "setup: create QA admin account (via set_user_role)",
+      "status": "PASS",
+      "detail": "9af74d8c-91b8-4672-b0c2-d9972e52918e",
+      "ms": 508
+    },
+    {
+      "name": "auth: admin logs in via POST /auth/login",
+      "status": "PASS",
+      "detail": "eyJhbGciOiJFUzI1NiIsImtpZCI6IjUwNGI2MWRmLWZjODktNGQ2Zi04MTk3LWFkZGZlNGEzMDNkYSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hiaXh5eWFueGJmcXlla3NiY3VyLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI5YWY3NGQ4Yy05MWI4LTQ2NzItYjBjMi1kOTk3MmU1MjkxOGUiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzg4MzI3MDk0LCJpYXQiOjE3ODgzMjM0OTQsImVtYWlsIjoia3VzdW0uZGVudGFsLmF1dG90ZXN0LmFkbWluKzE3ODgzMjM0OTI3NjhAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdLCJyb2xlIjoiQURNSU4ifSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbF92ZXJpZmllZCI6dHJ1ZX0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3ODgzMjM0OTR9XSwic2Vzc2lvbl9pZCI6ImExOGM2MjNjLWJhM2UtNDY0Mi05NmUwLWU2MmU5OTc1M2U3OCIsImlzX2Fub255bW91cyI6ZmFsc2V9.qp8DQkgpWOB2awvlqyXXeD8g-8DY7WIG4vHWaUtiiDwwSGeFjTxVSY0JxyFEHSUor5h2ld_V0FbEhZDshhTXZw",
+      "ms": 1578
+    },
+    {
+      "name": "setup: fetch a real service id",
+      "status": "PASS",
+      "detail": "{\"id\":\"14680082-8315-4083-9051-47124e0c3009\"}",
+      "ms": 180
+    },
+    {
+      "name": "setup: fetch a real staff id",
+      "status": "PASS",
+      "detail": "{\"id\":\"074d63b2-5617-4d4a-a387-029ab6c3d4bc\"}",
+      "ms": 181
+    },
+    {
+      "name": "realtime: authenticate the subscription as the admin",
+      "status": "PASS",
+      "detail": "session set",
+      "ms": 215
+    },
+    {
+      "name": "realtime: open channel and wait for SUBSCRIBED",
+      "status": "PASS",
+      "detail": "[object Object]",
+      "ms": 349
+    },
+    {
+      "name": "baseline: GET /admin/dashboard before any writes",
+      "status": "PASS",
+      "detail": "{\"appointmentsToday\":0,\"appointmentsUpcoming\":0,\"patientsVisited\":0,\"patientsInTreatment\":0,\"paymentsCompletedCount\":0,\"paymentsCompletedAmount\":0,\"paymentsPendingCount\":0,\"paymentsPendingAmount\":0,\"newPatientsThisWeek\":1,\"availableSlots\":0}",
+      "ms": 1489
+    },
+    {
+      "name": "POST /admin/appointments (booking processed)",
+      "status": "PASS",
+      "detail": "add9e284-171f-4a5b-8a57-c77cddd9bf8e",
+      "ms": 1078
+    },
+    {
+      "name": "realtime: appointment INSERT event received",
+      "status": "PASS",
+      "detail": "{\"table\":\"appointments\",\"eventType\":\"INSERT\",\"receivedAt\":1788323499370}",
+      "ms": 307
+    },
+    {
+      "name": "dashboard reflects the new appointment (appointmentsToday +1)",
+      "status": "PASS",
+      "detail": "appointmentsToday 0 -> 1",
+      "ms": 1380
+    },
+    {
+      "name": "appointments list contains the new booking",
+      "status": "PASS",
+      "detail": "{\"id\":\"add9e284-171f-4a5b-8a57-c77cddd9bf8e\",\"appointment_date\":\"2026-09-02\",\"start_time\":\"15:00:00\",\"end_time\":\"15:30:00\",\"status\":\"SCHEDULED\",\"notes\":\"automated test — booking simulated\",\"cancelled_reason\":null,\"patient\":{\"id\":\"8d90f6eb-3d7b-4d5b-b1bb-8f0d15c0aa4b\",\"phone\":null,\"full_name\":\"Autotest Patient\"},\"staff\":{\"id\":\"074d63b2-5617-4d4a-a387-029ab6c3d4bc\",\"full_name\":\"Admin Checker\"},\"service\":{\"id\":\"14680082-8315-4083-9051-47124e0c3009\",\"name\":\"Root Canal Treatment\",\"base_price\":4500,\"duration_minutes\":60}}",
+      "ms": 1331
+    },
+    {
+      "name": "POST /admin/visits (treatment session logged)",
+      "status": "PASS",
+      "detail": "a8321b96-0a38-4107-aeea-8308b1b6856a",
+      "ms": 1580
+    },
+    {
+      "name": "realtime: visit_logs INSERT event received",
+      "status": "PASS",
+      "detail": "{\"table\":\"visit_logs\",\"eventType\":\"INSERT\",\"receivedAt\":1788323503541}",
+      "ms": 0
+    },
+    {
+      "name": "POST /admin/invoices (receipt generated)",
+      "status": "PASS",
+      "detail": "757341f8-db80-40a7-8dce-9c4b905ae11e",
+      "ms": 2620
+    },
+    {
+      "name": "realtime: invoices INSERT event received",
+      "status": "PASS",
+      "detail": "{\"table\":\"invoices\",\"eventType\":\"INSERT\",\"receivedAt\":1788323504972}",
+      "ms": 0
+    },
+    {
+      "name": "setup: record a legacy payment row (service_role, mirrors admin UI)",
+      "status": "PASS",
+      "detail": "c0ed2533-a1ad-48e5-9ef1-726599e8b13a",
+      "ms": 513
+    },
+    {
+      "name": "realtime: payments INSERT event received",
+      "status": "PASS",
+      "detail": "{\"table\":\"payments\",\"eventType\":\"INSERT\",\"receivedAt\":1788323507019}",
+      "ms": 201
+    },
+    {
+      "name": "patient record reflects outstanding balance + visit history",
+      "status": "PASS",
+      "detail": "{\"outstandingBalance\":3000,\"visitCount\":1}",
+      "ms": 1333
+    }
+  ]
+}

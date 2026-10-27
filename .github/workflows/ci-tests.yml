@@ -1,0 +1,60 @@
+name: CI tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  schedule:
+    # Daily at 03:00 UTC — catches production drift even with no code changes
+    # (e.g. a Supabase RLS policy edited outside this repo, or a third-party
+    # API like SerpApi changing its response shape).
+    - cron: '0 3 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  reviews-mapping-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node api/reviews.test.mjs
+
+  backend-unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+        working-directory: backend
+      - run: npm test
+        working-directory: backend
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
+  realtime-booking-flow:
+    runs-on: ubuntu-latest
+    # Hits the live production API + live Supabase and creates/cleans up its
+    # own test data — safe to run on a schedule, but skipped on ordinary PRs
+    # so a contributor's branch can't accidentally spam production.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+        working-directory: backend
+      - run: npm run test:realtime-flow
+        working-directory: backend
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          TEST_API_URL: https://kusum-s-dental-care.vercel.app/api/v1
